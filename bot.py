@@ -1,15 +1,22 @@
-#!/usr/bin/python
-
-# This is a simple echo bot using the decorator mechanism.
-# It echoes any incoming text messages.
-
+import os
 import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+import random, requests
 from config import token
-
 bot = telebot.TeleBot(token)
-
 # Handle '/start'
+def get_duck_image_url():    
+        url = 'https://random-d.uk/api/random'
+        res = requests.get(url)
+        data = res.json()
+        return data['url']
+    
+    
+@bot.message_handler(commands=['duck'])
+def duck(message):
+    '''По команде duck вызывает функцию get_duck_image_url и отправляет URL изображения утки'''
+    image_url = get_duck_image_url()
+    bot.reply_to(message, image_url)
+    
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, 'привет! бонжур! хелло!')
@@ -22,30 +29,25 @@ def send_welcome(message):
 def send_welcome(message):
     bot.reply_to(message, 'Что я умею? Да понятия не имею, у меня нет самосознания, я не способен к рефлексии, я умею делать то что задумал мой создатель. К сожалению создатель не захотел делать нормальное описание, так что довольствуйтесь этим.')
 
-
-@bot.callback_query_handler(func=lambda call: True)
-def callback_query(call):
-    if call.data == "cb_yes":
-        bot.answer_callback_query(call.id, "Answer is Yes")
-    elif call.data == "cb_no":
-        bot.answer_callback_query(call.id, "Answer is No")
-
-
-@bot.message_handler(func=lambda message: True)
-def message_handler(message):
-    bot.send_message(message.chat.id, "Yes/no?", reply_markup=gen_markup())
-
-
 @bot.message_handler(content_types=['photo'])
+def send_sticker(message):
+    bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAEugZ9nEjsF5BO9q2rpCYv8Vc5JPyILiAACaRMAAsNvEEp0UMRQ1rOWsjYE")
+
+@bot.message_handler(commands=['dice'])
 def send_dice(message):
-    bot.send_dice(message.chat.id) # это мой брат написал 
+    bot.send_dice(message.chat.id)
+                 
+@bot.message_handler(commands=['mem'])
+def send_mem(message):
+    with open('images/mem1.jpeg', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+
+@bot.message_handler(commands=['meme'])
+def send_mem(message):
+    ing_name = random.choice(os.listdir("images"))
+    with open(f'images/{ing_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
 
 
-def gen_markup():
-    markup = InlineKeyboardMarkup()
-    markup.row_width = 2
-    markup.add(InlineKeyboardButton("Yes", callback_data="cb_yes"),
-                               InlineKeyboardButton("No", callback_data="cb_no"))
-    return markup
-
+    
 bot.infinity_polling()
