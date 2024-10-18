@@ -9,8 +9,7 @@ def get_duck_image_url():
         res = requests.get(url)
         data = res.json()
         return data['url']
-    
-    
+       
 @bot.message_handler(commands=['duck'])
 def duck(message):
     '''По команде duck вызывает функцию get_duck_image_url и отправляет URL изображения утки'''
@@ -46,8 +45,26 @@ def send_mem(message):
 def send_mem(message):
     ing_name = random.choice(os.listdir("images"))
     with open(f'images/{ing_name}', 'rb') as f:  
-        bot.send_photo(message.chat.id, f)  
+        bot.send_photo(message.chat.id, f)
+
+@bot.message_handler(commands=["oldmem"]) 
+def send_mem(message):
+    number = random.randint(1,100)
+    if 25 <= number:
+        old_mem = random.choice(os.listdir('images2'))
+        bot.send_message(message.chat.id, "Вам попался ОБЫЧНЫЙ МЕМ...")
+        with open (f'images2/{old_mem}', 'rb') as f:
+            bot.send_photo(message.chat.id, f)
+    elif 25 > number and 1 < number:
+        old_mem = random.choice(os.listdir('images3'))
+        bot.send_message(message.chat.id, "Вам попался РЕДКИЙ МЕМ!")
+        with open (f'images3/{old_mem}', 'rb') as f:
+            bot.send_photo(message.chat.id, f)
+    elif 1 == number:
+        old_mem = random.choice(os.listdir('legendary'))
+        bot.send_message(message.chat.id, "Вам попался ЛЕГЕНДАРНЫЙ МЕМ!!!")
+        with open (f'legendary/{old_mem}', 'rb') as f:
+            bot.send_photo(message.chat.id, f)
 
 
-    
 bot.infinity_polling()
