@@ -4,6 +4,12 @@ import random, requests
 from config import token
 bot = telebot.TeleBot(token)
 # Handle '/start'
+#https://random.dog/woof.json
+def get_dog_image_url():    
+        url = 'https://random.dog/woof.json'
+        res = requests.get(url)
+        data = res.json()
+        return data['url']
 def get_duck_image_url():    
         url = 'https://random-d.uk/api/random'
         res = requests.get(url)
@@ -15,7 +21,12 @@ def duck(message):
     '''По команде duck вызывает функцию get_duck_image_url и отправляет URL изображения утки'''
     image_url = get_duck_image_url()
     bot.reply_to(message, image_url)
-    
+
+@bot.message_handler(commands=['dog'])
+def dog(message):
+    image_url = get_dog_image_url()
+    bot.reply_to(message, image_url)
+
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, 'привет! бонжур! хелло!')
