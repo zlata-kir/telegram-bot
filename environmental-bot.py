@@ -69,20 +69,14 @@ def text(mess):
         elif mess.text.lower() == 'жестяная банка':
             bot.send_photo(mess.chat.id, 'https://avatars.mds.yandex.net/i?id=9dcba70ac7d5fc7a67c6432dfaed5657c587b782-4705461-images-thumbs&n=13')
             bot.send_message(mess.chat.id, 'Жестяная банка разлагается до 90 лет.')
-
-> Horie:
-elif mess.text.lower() == 'картонные коробки':
+        elif mess.text.lower() == 'картонные коробки':
             bot.send_photo(mess.chat.id, 'https://avatars.mds.yandex.net/i?id=178b8b22adcb94d00ab47410d01fe6a7_l-6503967-images-thumbs&n=13')
             bot.send_message(mess.chat.id, 'Картонные коробки разлагаются до 1 года')
         
         elif mess.text.lower() == 'одежда':
             bot.send_photo(mess.chat.id, 'https://cdn.lsboutique.ru/files/posts/11.jpg')
             bot.send_message(mess.chat.id, 'Натуральная одежда и ткани разлагаются от 2 до 3 лет')
-
-        
-
-        
-
+            
     elif mode == 2:
         if mess.text.lower() == 'стекло':
             bot.send_photo(mess.chat.id, 'https://smola20.ru/upload/medialibrary/137/1379b9af7d7c1bbd26e862ee78bb7996.jpg')
@@ -124,8 +118,7 @@ elif mess.text.lower() == 'картонные коробки':
             bot.send_photo(mess.chat.id, 'https://avatars.mds.yandex.net/i?id=9dcba70ac7d5fc7a67c6432dfaed5657c587b782-4705461-images-thumbs&n=13')
             bot.send_message(mess.chat.id, 'Жестяная банка - выкидывается в синий контейнер для вторсырья, которое в дальнейшем сдается на переработку.')
 
-> Horie:
-elif mess.text.lower() == 'картонные коробки':
+        elif mess.text.lower() == 'картонные коробки':
             bot.send_photo(mess.chat.id, 'https://avatars.mds.yandex.net/i?id=178b8b22adcb94d00ab47410d01fe6a7_l-6503967-images-thumbs&n=13')
             bot.send_message(mess.chat.id, 'Картонные коробки - выкидываются в синий контейнер для вторсырья, которое в дальнейшем сдается на переработку.')
             
